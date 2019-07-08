@@ -158,7 +158,7 @@ enum class TimeUnits{
             when {
                 number in 11..19 || lastNumber==0L || lastNumber in 5..9 -> digitForm = "секунд"
                 lastNumber in 2..4 -> digitForm = "секунды"
-                else -> digitForm = "секунда"
+                else -> digitForm = "секунду"
             }
 
             return "$number $digitForm"
@@ -172,7 +172,7 @@ enum class TimeUnits{
             when {
                 number in 11..19 || lastNumber==0L || lastNumber in 5..9 -> digitForm = "минут"
                 lastNumber in 2..4 -> digitForm = "минуты"
-                else -> digitForm = "минута"
+                else -> digitForm = "минуту"
             }
 
             return "$number $digitForm"
