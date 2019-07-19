@@ -1,6 +1,6 @@
 package ru.skillbranch.devintensive.models
 
-class Bender(var status:Status = Status.NORMAL, var question: Question = Question.NAME) {
+class Bender(var status: Status = Status.NORMAL, var question: Question = Question.NAME) {
 
     fun askQuestion(): String =  when (question) {
         Question.NAME -> Question.NAME.question
@@ -15,11 +15,24 @@ class Bender(var status:Status = Status.NORMAL, var question: Question = Questio
 
         return if (question.answers.contains(answer)) {
             question = question.nextQuestion()
-            "Отлично - это правильный ответ!\n${question.question}" to status.color
+            "Отлично - ты справился\n${question.question}" to status.color
         } else {
-            status = status.nextStatus()
-            "Это не правильный ответ!\n${question.question}" to status.color
+
+            if (question != Question.IDLE) {
+                if (status == Status.CRITICAL) {
+                    status = Status.NORMAL
+                    question = Question.NAME
+                    "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
+                } else {
+                    status = status.nextStatus()
+                    "Это неправильный ответ!\n${question.question}" to status.color
+                }
+            } else {
+                "Отлично - ты справился\n${question.question}" to status.color
+            }
+
         }
+
     }
 
     enum class Status(val color: Triple<Int, Int, Int>) {
