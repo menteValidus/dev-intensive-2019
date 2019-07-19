@@ -2,6 +2,12 @@ package ru.skillbranch.devintensive.models
 
 class Bender(var status: Status = Status.NORMAL, var question: Question = Question.NAME) {
 
+    private val invalidNameString = "Имя должно начинаться с заглавной буквы"
+    private val invalidProfessionString = "Профессия должна начинаться со строчной буквы"
+    private val invalidMaterialString = "Материал не должен содержать цифр"
+    private val invalidBDayString = "Год моего рождения должен содержать только цифры"
+    private val invalidSerialString = "Серийный номер содержит только цифры, и их 7"
+
     fun askQuestion(): String =  when (question) {
         Question.NAME -> Question.NAME.question
         Question.PROFESSION -> Question.PROFESSION.question
@@ -13,7 +19,12 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
     fun listenAnswer(answer:String): Pair<String, Triple<Int, Int, Int>> {
 
-        return if (question.answers.contains(answer)) {
+        val invalidAnswer = validateAnswer(answer, question)
+        val answer = answer.toLowerCase()
+
+        return if (invalidAnswer != null) {
+            "$invalidAnswer\n${question.question}" to status.color
+        } else if (question.answers.contains(answer)) {
             question = question.nextQuestion()
             "Отлично - ты справился\n${question.question}" to status.color
         } else {
@@ -33,6 +44,37 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
         }
 
+    }
+
+    private fun validateAnswer(answer: String, question: Question): String? {
+
+        if (answer.isEmpty()) return null
+
+        when (question) {
+            Question.NAME -> {
+                if (!answer[0].isUpperCase())
+                    return invalidNameString
+            }
+            Question.PROFESSION -> {
+                if (answer[0].isUpperCase())
+                    return invalidProfessionString
+            }
+            Question.MATERIAL -> {
+                answer.forEach { w -> if (w.isDigit()) return invalidMaterialString }
+            }
+            Question.BDAY -> {
+                answer.forEach { w -> if (!w.isDigit()) return invalidBDayString }
+            }
+            Question.SERIAL -> {
+                if (answer.length == 7) {
+                    answer.forEach { w -> if (!w.isDigit()) return invalidSerialString }
+                } else {
+                    return invalidSerialString
+                }
+            }
+        }
+
+        return null
     }
 
     enum class Status(val color: Triple<Int, Int, Int>) {
