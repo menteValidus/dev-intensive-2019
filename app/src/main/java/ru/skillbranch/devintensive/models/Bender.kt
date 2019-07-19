@@ -8,6 +8,8 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     private val invalidBDayString = "Год моего рождения должен содержать только цифры"
     private val invalidSerialString = "Серийный номер содержит только цифры, и их 7"
 
+    private val wrongAnswerMessage = "Это неправильный ответ"
+
     fun askQuestion(): String =  when (question) {
         Question.NAME -> Question.NAME.question
         Question.PROFESSION -> Question.PROFESSION.question
@@ -33,10 +35,10 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
                 if (status == Status.CRITICAL) {
                     status = Status.NORMAL
                     question = Question.NAME
-                    "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
+                    "$wrongAnswerMessage. Давай все по новой\n${question.question}" to status.color
                 } else {
                     status = status.nextStatus()
-                    "Это неправильный ответ!\n${question.question}" to status.color
+                    "$wrongAnswerMessage\n${question.question}" to status.color
                 }
             } else {
                 "Отлично - ты справился\n${question.question}" to status.color
