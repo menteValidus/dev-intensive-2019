@@ -9,11 +9,6 @@
         <attr name="cv_borderWidth" format="dimension" />
     </declare-styleable>
 
-    <declare-styleable name="Test_CircleImageView">
-        <attr name="cv1_borderColor" format="color" />
-        <attr name="cv1_borderWidth" format="dimension" />
-    </declare-styleable>
-
     <attr name="colorAccentedSurface" format="reference"/>
     <attr name="colorDivider" format="reference"/>
     <attr name="colorIcon" format="reference"/>

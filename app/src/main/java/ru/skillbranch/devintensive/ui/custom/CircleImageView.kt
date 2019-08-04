@@ -1,11 +1,15 @@
 package ru.skillbranch.devintensive.ui.custom
 
+import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.AttributeSet
+import android.view.View
+import android.view.ViewOutlineProvider
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.Dimension
@@ -43,9 +47,9 @@ class CircleImageView @JvmOverloads constructor(
     init {
 
         if (attrs != null) {
-            val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, 0, 0)
+            val a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyleAttr, 0)
 
-            borderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_cv_borderWidth, DEFAULT_BORDER_WIDTH)
+            borderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_cv_borderWidth, -1)
             borderColor = a.getColor(R.styleable.CircleImageView_cv_borderColor, DEFAULT_BORDER_COLOR)
 
             a.recycle()
@@ -125,14 +129,21 @@ class CircleImageView @JvmOverloads constructor(
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
 
+        val halfStrokeWidth = strokePaint.strokeWidth / 2f
         updateCircleDrawBounds(bitmapDrawBounds)
+        strokeBounds.set(bitmapDrawBounds)
+        strokeBounds.inset(halfStrokeWidth, halfStrokeWidth)
+
+        updateBitmapSize()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            outlineProvider = CircleImageViewOutlineProvider(strokeBounds)
+        }
     }
 
     override fun onDraw(canvas: Canvas?) {
         drawBitmap(canvas)
         drawBorder(canvas)
-        super.onDraw(canvas)
-
     }
 
 
@@ -162,6 +173,21 @@ class CircleImageView @JvmOverloads constructor(
 
         val diameter = Math.min(contentWidth, contentHeight);
         bounds.set(left, top, left + diameter, top + diameter)
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    class CircleImageViewOutlineProvider constructor(rectF: RectF) : ViewOutlineProvider() {
+
+        private lateinit var rect: Rect
+
+        init {
+            rect = Rect(rectF.left.toInt(), rectF.top.toInt(), rectF.right.toInt(), rectF.bottom.toInt())
+        }
+
+        override fun getOutline(view: View?, outline: Outline?) {
+            outline?.setOval(rect)
+        }
+
     }
 
     @Dimension
