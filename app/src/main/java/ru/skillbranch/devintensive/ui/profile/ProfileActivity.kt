@@ -28,6 +28,9 @@ class ProfileActivity : AppCompatActivity() {
 
     var isEditMode = false
     override fun onCreate(savedInstanceState: Bundle?) {
+        //TODO set custom Theme this before super and setContentView
+
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         initViews(savedInstanceState)

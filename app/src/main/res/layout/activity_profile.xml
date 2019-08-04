@@ -33,12 +33,14 @@
                     android:layout_marginRight="@dimen/spacing_huge_32"
                     android:layout_marginTop="36dp"/>
 
-            <ImageView
+            <ru.skillbranch.devintensive.ui.custom.CircleImageView
                     android:id="@+id/iv_avatar"
                     android:layout_width="@dimen/avatar_round_size"
                     android:layout_height="@dimen/avatar_round_size"
-                    android:src="@drawable/avatar_default"
-                    android:layout_centerHorizontal="true"/>
+                    android:src="@drawable/profile_bg"
+                    android:layout_centerHorizontal="true"
+                    app:cv1_borderColor="@android:color/background_dark"
+            app:cv1_borderWidth="2dp"/>
 
             <ImageButton
                     android:id="@+id/btn_edit"
@@ -73,7 +75,7 @@
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:orientation="horizontal"
-                  android:background="@color/color_accent_night">
+                  android:background="?attr/colorAccentedSurface">
         <LinearLayout android:layout_width="0dp"
                       android:layout_height="wrap_content"
                       android:layout_weight="1"
@@ -180,7 +182,7 @@
 
     <View android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/color_accent_night"
+          android:background="?attr/colorDivider"
           android:layout_marginLeft="@dimen/space_maximum_72"/>
 
     <LinearLayout style="@style/Profile.InfoItem"
@@ -209,7 +211,7 @@
 
     <View android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/color_accent_night"
+          android:background="?attr/colorDivider"
           android:layout_marginLeft="@dimen/space_maximum_72"/>
 
     <LinearLayout
@@ -224,6 +226,7 @@
                    android:src="@drawable/ic_repo"/>
 
         <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/wr_repository"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_normal_16"
