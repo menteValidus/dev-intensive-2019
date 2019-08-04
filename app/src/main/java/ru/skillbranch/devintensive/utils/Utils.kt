@@ -2,7 +2,7 @@ package ru.skillbranch.devintensive.utils
 
 object Utils {
 
-    private val transliterationMap: Map<Char, String> = hashMapOf (
+    private val transliterationMap: Map<Char, String> = hashMapOf(
         'а' to "a",
         'б' to "b",
         'в' to "v",
@@ -33,7 +33,7 @@ object Utils {
         'ъ' to "",
         'ы' to "i",
         'ь' to "",
-        'э' to  "e",
+        'э' to "e",
         'ю' to "yu",
         'я' to "ya"
     )
@@ -53,7 +53,8 @@ object Utils {
     fun transliteration(payload: String, divider: String = " "): String {
         var transFullName = String()
 
-        for (character in payload) {
+
+        for (character in payload.trim()) {
 
             if (character.isWhitespace()) {
                 transFullName += divider
@@ -66,7 +67,7 @@ object Utils {
         return transFullName
     }
 
-    fun convertLetter(letter:Char, isUpperCase: Boolean): String? {
+    fun convertLetter(letter: Char, isUpperCase: Boolean): String? {
         /*val transLetter: String
 
         when (letter) {
@@ -107,7 +108,7 @@ object Utils {
         }*/
 
         if (letter.isLetter()) {
-            val  transliteratedLetter = transliterationMap[letter]
+            val transliteratedLetter = transliterationMap[letter]
 
             if (transliteratedLetter != null) {
 

@@ -144,6 +144,7 @@ class ProfileActivity : AppCompatActivity() {
             repository = et_repository.text.toString()
         ).apply {
             viewModel.saveProfileData(this)
+            tv_nick_name.text = this.nickname
         }
     }
 }

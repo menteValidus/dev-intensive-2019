@@ -1,18 +1,21 @@
 package ru.skillbranch.devintensive.models
 
-data class Profile (
-    val firstName : String,
-    val lastName : String,
-    val about : String,
-    val repository : String,
-    val rating : Int = 0,
-    val respect : Int = 0
+import ru.skillbranch.devintensive.utils.Utils
+
+data class Profile(
+    val firstName: String,
+    val lastName: String,
+    val about: String,
+    val repository: String,
+    val rating: Int = 0,
+    val respect: Int = 0
 ) {
-    val nickname : String = "John Doe" //TODO implement me
-    val rank : String = "Junior Android Developer"
+    val nickname: String
+        get() = Utils.transliteration("$firstName $lastName", "_")
 
+    val rank: String = "Junior Android Developer"
 
-    fun  toMap() : Map<String, Any> = mapOf(
+    fun toMap(): Map<String, Any> = mapOf(
         "nickname" to nickname,
         "rank" to rank,
         "firstName" to firstName,
@@ -22,4 +25,5 @@ data class Profile (
         "rating" to rating,
         "respect" to respect
     )
+
 }
