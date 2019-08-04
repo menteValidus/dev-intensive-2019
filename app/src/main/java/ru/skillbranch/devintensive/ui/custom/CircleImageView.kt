@@ -1,7 +1,6 @@
 package ru.skillbranch.devintensive.ui.custom
 
 import android.annotation.TargetApi
-import android.app.Activity
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
@@ -15,7 +14,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.Dimension
 import androidx.core.content.ContextCompat
 import ru.skillbranch.devintensive.R
-
+import android.util.DisplayMetrics
 
 class CircleImageView @JvmOverloads constructor(
     context: Context,
@@ -32,15 +31,15 @@ class CircleImageView @JvmOverloads constructor(
     private var borderColor = DEFAULT_BORDER_COLOR
 
     private lateinit var bitmapShader: Shader
-    private lateinit var shaderMatrix: Matrix
+    private var shaderMatrix: Matrix
 
-    private lateinit var bitmapDrawBounds: RectF
-    private lateinit var strokeBounds: RectF
+    private var bitmapDrawBounds: RectF
+    private var strokeBounds: RectF
 
     private var bitmap: Bitmap? = null
 
-    private lateinit var bitmapPaint: Paint
-    private lateinit var strokePaint: Paint
+    private var bitmapPaint: Paint
+    private var strokePaint: Paint
 
     private var initialised = false
 
@@ -88,10 +87,10 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     private fun updateBitmapSize() {
-        var dx: Float
-        var dy: Float
+        val dx: Float
+        val dy: Float
 
-        var scale: Float
+        val scale: Float
 
         if (bitmap!!.width < bitmap!!.height) {
             scale = bitmapDrawBounds.width() / bitmap!!.width
@@ -119,7 +118,7 @@ class CircleImageView @JvmOverloads constructor(
         }
 
         bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-        var canvas = Canvas(bitmap)
+        val canvas = Canvas(bitmap)
         drawable.setBounds(0, 0, canvas.width, canvas.height)
         drawable.draw(canvas)
 
@@ -192,11 +191,11 @@ class CircleImageView @JvmOverloads constructor(
 
     @Dimension
     fun getBorderWidth(): Int {
-        return strokePaint.strokeWidth.toInt()
+        return Math.round(convertPixelsToDp(strokePaint.strokeWidth, context))
     }
 
     fun setBorderWidth(@Dimension dp: Int) {
-        strokePaint.strokeWidth = dp.toFloat()
+        strokePaint.strokeWidth = convertDpToPixel(dp.toFloat(), context)
         invalidate()
     }
 
@@ -214,4 +213,13 @@ class CircleImageView @JvmOverloads constructor(
         strokePaint.color = color
         invalidate()
     }
+
+    fun convertDpToPixel(dp: Float, context: Context): Float {
+        return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    }
+
+    fun convertPixelsToDp(px: Float, context: Context): Float {
+        return px / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    }
+
 }

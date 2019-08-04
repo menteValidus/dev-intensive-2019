@@ -28,7 +28,7 @@
                     android:layout_width="@dimen/btn_round_size_40"
                     android:layout_height="@dimen/btn_round_size_40"
                     android:background="@drawable/btn_round_bg"
-                    android:src="@drawable/ic_brightness_high_black_24dp"
+                    android:src="@drawable/ic_switch_day_night"
                     android:layout_toLeftOf="@id/iv_avatar"
                     android:layout_marginRight="@dimen/spacing_huge_32"
                     android:layout_marginTop="36dp"/>
@@ -54,7 +54,7 @@
 
             <TextView
                     style="@style/Profile.Header.Nickname"
-                    android:id="@+id/tv_nickname"
+                    android:id="@+id/tv_nick_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/iv_avatar"
@@ -66,7 +66,7 @@
                     android:id="@+id/tv_rank"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_nickname"
+                    android:layout_below="@+id/tv_nick_name"
                     android:layout_centerHorizontal="true"
                     android:text="Junior Android Developer"/>
         </RelativeLayout>

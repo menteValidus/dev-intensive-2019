@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -70,7 +71,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun initViews(savedInstanceState: Bundle?) {
 
         viewFields = mapOf(
-            "nickname" to tv_nickname,
+            "nickname" to tv_nick_name,
             "rank" to tv_rank,
             "firstName" to et_first_name,
             "lastName" to et_last_name,
@@ -112,9 +113,11 @@ class ProfileActivity : AppCompatActivity() {
         wr_about.isCounterEnabled = isEdit
 
         with(btn_edit) {
+            val typedValue = TypedValue()
+            theme.resolveAttribute(R.attr.colorAccent, typedValue, true)
             val filter : ColorFilter? = if (isEdit){
                 PorterDuffColorFilter(
-                    resources.getColor(R.color.color_accent, theme),
+                    typedValue.data,
                     PorterDuff.Mode.SRC_IN
                 )
             } else {
