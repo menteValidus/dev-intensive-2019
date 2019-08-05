@@ -5,7 +5,8 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.Profile
+import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity() {
@@ -25,6 +27,7 @@ class ProfileActivity : AppCompatActivity() {
 
     companion object {
         const val IS_EDIT_MODE = "IS_EDIT_MODE"
+        const val INVALID_REPOSITORY_MESSAGE = "Невалидный адрес репозитория"
     }
 
     var isEditMode = false
@@ -85,6 +88,33 @@ class ProfileActivity : AppCompatActivity() {
         isEditMode = savedInstanceState?.getBoolean(IS_EDIT_MODE, false) ?: false
         showCurrentMode(isEditMode)
 
+
+        et_repository.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                if (isEditMode) {
+
+                    if (Utils.checkGithubUrl(s.toString())) {
+                        wr_repository.error = null
+                        wr_repository.isErrorEnabled = false
+                    } else {
+                        wr_repository.error = INVALID_REPOSITORY_MESSAGE
+                        wr_repository.isErrorEnabled = true
+                    }
+
+                }
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
+
         btn_edit.setOnClickListener {
 
             if (isEditMode) saveProfileInfo()
@@ -138,6 +168,11 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun  saveProfileInfo() {
+
+        if (wr_repository.error != null) {
+            et_repository.setText("")
+        }
+
         Profile(
             firstName = et_first_name.text.toString(),
             lastName = et_last_name.text.toString(),

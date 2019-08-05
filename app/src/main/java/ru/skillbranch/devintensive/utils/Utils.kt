@@ -1,5 +1,8 @@
 package ru.skillbranch.devintensive.utils
 
+import java.net.MalformedURLException
+import java.net.URL
+
 object Utils {
 
     private val transliterationMap: Map<Char, String> = hashMapOf(
@@ -37,6 +40,21 @@ object Utils {
         'ю' to "yu",
         'я' to "ya"
     )
+    private val excludePaths = listOf(
+                "enterprise",
+                "features",
+                "topics",
+                "collections",
+                "trending",
+                "events",
+                "marketplace",
+                "pricing",
+                "nonprofit",
+                "customer-stories",
+                "security",
+                "login",
+                "join"
+    )
 
     fun parseFullName(fullName: String?): Pair<String?, String?> {
         val firstName: String?
@@ -68,44 +86,6 @@ object Utils {
     }
 
     fun convertLetter(letter: Char, isUpperCase: Boolean): String? {
-        /*val transLetter: String
-
-        when (letter) {
-            "а" -> transLetter = "a"
-            "б" -> transLetter = "b"
-            "в" -> transLetter = "v"
-            "г" -> transLetter = "g"
-            "д" -> transLetter = "d"
-            "е" -> transLetter = "e"
-            "ё" -> transLetter = "e"
-            "ж" -> transLetter = "zh"
-            "з" -> transLetter = "z"
-            "и" -> transLetter = "i"
-            "й" -> transLetter = "i"
-            "к" -> transLetter = "k"
-            "л" -> transLetter = "l"
-            "м" -> transLetter = "m"
-            "н" -> transLetter = "n"
-            "о" -> transLetter = "o"
-            "п" -> transLetter = "p"
-            "р" -> transLetter = "r"
-            "с" -> transLetter = "s"
-            "т" -> transLetter = "t"
-            "у" -> transLetter = "u"
-            "ф" -> transLetter = "f"
-            "х" -> transLetter = "h"
-            "ц" -> transLetter = "c"
-            "ч" -> transLetter = "ch"
-            "ш" -> transLetter = "sh"
-            "щ" -> transLetter = "sh'"
-            "ъ" -> transLetter = ""
-            "ы" -> transLetter = "i"
-            "ь" -> transLetter = ""
-            "э" -> transLetter = "e"
-            "ю" -> transLetter = "yu"
-            "я" -> transLetter = "ya"
-            else -> transLetter = letter
-        }*/
 
         if (letter.isLetter()) {
             val transliteratedLetter = transliterationMap[letter]
@@ -154,5 +134,51 @@ object Utils {
             }
         }
 
+    }
+
+    fun checkGithubUrl(sUrl: String): Boolean {
+
+        if (sUrl.isEmpty()) {
+            return true
+        }
+
+        var u: URL
+
+        try {
+            u = URL(sUrl)
+        } catch (ex: MalformedURLException) {
+            u = URL("https://$sUrl")
+        }
+
+        if (u.protocol == "https" && (u.host == "github.com" || u.host == "www.github.com") ) {
+            val parts = u.file.split("/")
+
+            if (parts.count() == 2 && !parts[1].isNullOrEmpty() && !excludePaths.contains(parts[1])) {
+
+                for (c in parts[1]) {
+
+                    if (c.isWhitespace() || c == '_') {
+                        return false
+                    }
+
+                }
+
+                return true
+            } else if (parts.count() == 3 && !parts[1].isNullOrEmpty() && !excludePaths.contains(parts[1]) && parts[2].isNullOrEmpty()) {
+
+                for (c in parts[1]) {
+
+                    if (c.isWhitespace() || c == '_') {
+                        return false
+                    }
+
+                }
+
+                return true
+            }
+
+        }
+
+        return false
     }
 }
