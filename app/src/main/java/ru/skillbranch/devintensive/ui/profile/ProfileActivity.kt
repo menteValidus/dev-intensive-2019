@@ -76,13 +76,16 @@ class ProfileActivity : AppCompatActivity() {
         val bgColor = TypedValue()
         theme.resolveAttribute(R.attr.colorAccent, bgColor, true)
 
-        iv_avatar.setImageBitmap(Utils.textAsBitmap(
+        Utils.toInitials(et_first_name.text.toString(), et_last_name.text.toString())?.let {
+            iv_avatar?.setImageBitmap(Utils.textAsBitmap(
                 iv_avatar.layoutParams.width,
                 iv_avatar.layoutParams.height,
-                Utils.toInitials(et_first_name.text.toString(), et_last_name.text.toString())!!,
+                it,
                 convertSpToPixel(48f, this),
                 Color.WHITE,
                 bgColor.data))
+        } ?: iv_avatar.setImageResource(R.drawable.avatar_default)
+
         iv_avatar.setupBitmap()
     }
 
