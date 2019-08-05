@@ -35,9 +35,9 @@
 
             <ru.skillbranch.devintensive.ui.custom.CircleImageView
                     android:id="@+id/iv_avatar"
+                    android:src="@drawable/avatar_default"
                     android:layout_width="@dimen/avatar_round_size"
                     android:layout_height="@dimen/avatar_round_size"
-                    android:src="@drawable/profile_bg"
                     android:layout_centerHorizontal="true"
                     app:cv_borderColor="@android:color/white"
                     app:cv_borderWidth="2dp"/>

@@ -15,6 +15,9 @@ import androidx.annotation.Dimension
 import androidx.core.content.ContextCompat
 import ru.skillbranch.devintensive.R
 import android.util.DisplayMetrics
+import ru.skillbranch.devintensive.App
+import ru.skillbranch.devintensive.utils.Utils.convertDpToPixel
+import ru.skillbranch.devintensive.utils.Utils.convertPixelsToDp
 
 class CircleImageView @JvmOverloads constructor(
     context: Context,
@@ -68,7 +71,7 @@ class CircleImageView @JvmOverloads constructor(
         setupBitmap()
     }
 
-    private fun setupBitmap() {
+    fun setupBitmap() {
 
         if (!initialised) {
             return
@@ -209,17 +212,11 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     fun setBorderColor(@ColorRes colorId: Int) {
-        val color = ContextCompat.getColor(context, colorId)
+        val color = ContextCompat.getColor(App.applicationContext(), colorId)
         strokePaint.color = color
-        invalidate()
+        this.invalidate()
     }
 
-    fun convertDpToPixel(dp: Float, context: Context): Float {
-        return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-    }
 
-    fun convertPixelsToDp(px: Float, context: Context): Float {
-        return px / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-    }
 
 }

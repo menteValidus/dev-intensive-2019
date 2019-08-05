@@ -1,8 +1,8 @@
 package ru.skillbranch.devintensive.ui.profile
 
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
+import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.Profile
 import ru.skillbranch.devintensive.utils.Utils
+import ru.skillbranch.devintensive.utils.Utils.convertSpToPixel
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
 
 class ProfileActivity : AppCompatActivity() {
@@ -37,6 +38,7 @@ class ProfileActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
 
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_profile)
         initViews(savedInstanceState)
         initViewModel()
@@ -70,6 +72,18 @@ class ProfileActivity : AppCompatActivity() {
                 v.text = it[k].toString()
             }
         }
+
+        val bgColor = TypedValue()
+        theme.resolveAttribute(R.attr.colorAccent, bgColor, true)
+
+        iv_avatar.setImageBitmap(Utils.textAsBitmap(
+                iv_avatar.layoutParams.width,
+                iv_avatar.layoutParams.height,
+                Utils.toInitials(et_first_name.text.toString(), et_last_name.text.toString())!!,
+                convertSpToPixel(48f, this),
+                Color.WHITE,
+                bgColor.data))
+        iv_avatar.setupBitmap()
     }
 
     private fun initViews(savedInstanceState: Bundle?) {

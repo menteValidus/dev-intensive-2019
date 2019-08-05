@@ -1,7 +1,15 @@
 package ru.skillbranch.devintensive.utils
 
+import android.content.Context
+import android.graphics.*
 import java.net.MalformedURLException
 import java.net.URL
+import android.graphics.Paint.Align
+import android.graphics.Paint.ANTI_ALIAS_FLAG
+import android.icu.lang.UCharacter
+import android.util.DisplayMetrics
+import androidx.annotation.ColorInt
+
 
 object Utils {
 
@@ -180,5 +188,44 @@ object Utils {
         }
 
         return false
+    }
+
+    fun convertDpToPixel(dp: Float, context: Context): Float {
+        return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    }
+
+    fun convertPixelsToDp(px: Float, context: Context): Float {
+        return px / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    }
+
+    fun convertSpToPixel(sp: Float, context: Context): Float {
+        return sp * context.resources.displayMetrics.scaledDensity
+    }
+
+    fun textAsBitmap(width: Int,
+                     height: Int,
+                     text: String,
+                     textSize: Float,
+                     @ColorInt textColor: Int,
+                     @ColorInt bgColor: Int): Bitmap {
+        val paint = Paint(ANTI_ALIAS_FLAG)
+        paint.textSize = textSize
+        paint.color = textColor
+        paint.textAlign = Align.CENTER
+
+        val image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(image)
+        canvas.drawColor(bgColor)
+
+        val textBounds = Rect()
+        paint.getTextBounds(text, 0, text.length, textBounds)
+
+        val bgBounds = RectF()
+        bgBounds.set(0f, 0f, width.toFloat(), height.toFloat())
+
+        val textBottom = bgBounds.centerY() - textBounds.centerY()
+        canvas.drawText(text, bgBounds.centerX(), textBottom, paint)
+
+        return image
     }
 }
