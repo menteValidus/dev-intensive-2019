@@ -1,4 +1,3 @@
-
 package ru.skillbranch.devintensive.repositories
 
 import android.content.SharedPreferences
@@ -17,19 +16,19 @@ object PreferencesRepository {
     private const val RESPECT = "RESPECT"
     private const val APP_THEME = "APP_THEME"
 
-    private val prefs : SharedPreferences by lazy {
+    private val prefs: SharedPreferences by lazy {
         val ctx = App.applicationContext()
         PreferenceManager.getDefaultSharedPreferences(ctx)
     }
 
     fun saveAppTheme(theme: Int) {
-        putValue(APP_THEME to  theme)
+        putValue(APP_THEME to theme)
     }
 
-    fun getAppTheme() : Int = prefs.getInt(APP_THEME, AppCompatDelegate.MODE_NIGHT_NO)
+    fun getAppTheme(): Int = prefs.getInt(APP_THEME, AppCompatDelegate.MODE_NIGHT_NO)
 
     fun saveProfile(profile: Profile) {
-        with(profile){
+        with(profile) {
             putValue(FIRST_NAME to firstName)
             putValue(LAST_NAME to lastName)
             putValue(ABOUT to about)
@@ -53,7 +52,7 @@ object PreferencesRepository {
         val key = pair.first
         val value = pair.second
 
-        when(value) {
+        when (value) {
             is String -> putString(key, value)
             is Int -> putInt(key, value)
             is Boolean -> putBoolean(key, value)

@@ -11,7 +11,7 @@ import ru.skillbranch.devintensive.repositories.PreferencesRepository
 
 class ProfileViewModel : ViewModel() {
     private val repository: PreferencesRepository = PreferencesRepository
-    private val profileData = MediatorLiveData<Profile>()
+    private val profileData = MutableLiveData<Profile>()
     private val appTheme = MutableLiveData<Int>()
 
     init {
