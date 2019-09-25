@@ -1,5 +1,6 @@
 package ru.skillbranch.devintensive.ui.profile
 
+import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -33,7 +34,6 @@ class ProfileActivity : AppCompatActivity() {
 
     var isEditMode = false
     override fun onCreate(savedInstanceState: Bundle?) {
-        //TODO set custom Theme this before super and setContentView
 
         setTheme(R.style.AppTheme)
 
@@ -76,6 +76,7 @@ class ProfileActivity : AppCompatActivity() {
         val bgColor = TypedValue()
         theme.resolveAttribute(R.attr.colorAccent, bgColor, true)
 
+
         Utils.toInitials(et_first_name.text.toString(), et_last_name.text.toString())?.let {
             iv_avatar?.setImageBitmap(Utils.textAsBitmap(
                 iv_avatar.layoutParams.width,
@@ -86,7 +87,7 @@ class ProfileActivity : AppCompatActivity() {
                 bgColor.data))
         } ?: iv_avatar.setImageResource(R.drawable.avatar_default)
 
-        iv_avatar.setupBitmap()
+        //iv_avatar.setupBitmap()
     }
 
     private fun initViews(savedInstanceState: Bundle?) {

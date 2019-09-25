@@ -6,7 +6,8 @@ import java.net.MalformedURLException
 import java.net.URL
 import android.graphics.Paint.Align
 import android.graphics.Paint.ANTI_ALIAS_FLAG
-import android.icu.lang.UCharacter
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.util.DisplayMetrics
 import androidx.annotation.ColorInt
 
@@ -201,6 +202,11 @@ object Utils {
     fun convertSpToPixel(sp: Float, context: Context): Float {
         return sp * context.resources.displayMetrics.scaledDensity
     }
+
+    /**
+     * Метод, получающий Bitmap из Drawable.
+     */
+
 
     fun textAsBitmap(width: Int,
                      height: Int,

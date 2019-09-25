@@ -10,7 +10,7 @@ import ru.skillbranch.devintensive.viewmodels.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val chatAdapter: RecyclerView.Adapter<*>?
+    //private val chatAdapter: RecyclerView.Adapter<*>?
     private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews() {
         with(rv_chat_list) {
-            adapter = chatAdapter
+            //adapter = chatAdapter
         }
 
     }
