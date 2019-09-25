@@ -73,19 +73,22 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
-        val bgColor = TypedValue()
-        theme.resolveAttribute(R.attr.colorAccent, bgColor, true)
+        iv_avatar.setInitials(Utils.toInitials(et_first_name.text.toString(),
+            et_last_name.text.toString()) ?: "??")
 
-
-        Utils.toInitials(et_first_name.text.toString(), et_last_name.text.toString())?.let {
-            iv_avatar?.setImageBitmap(Utils.textAsBitmap(
-                iv_avatar.layoutParams.width,
-                iv_avatar.layoutParams.height,
-                it,
-                convertSpToPixel(48f, this),
-                Color.WHITE,
-                bgColor.data))
-        } ?: iv_avatar.setImageResource(R.drawable.avatar_default)
+//        val bgColor = TypedValue()
+//        theme.resolveAttribute(R.attr.colorAccent, bgColor, true)
+//
+//
+//        Utils.toInitials(et_first_name.text.toString(), et_last_name.text.toString())?.let {
+//            iv_avatar?.setImageBitmap(Utils.textAsBitmap(
+//                iv_avatar.layoutParams.width,
+//                iv_avatar.layoutParams.height,
+//                it,
+//                convertSpToPixel(48f, this),
+//                Color.WHITE,
+//                bgColor.data))
+//        } ?: iv_avatar.setImageResource(R.drawable.avatar_default)
 
         //iv_avatar.setupBitmap()
     }

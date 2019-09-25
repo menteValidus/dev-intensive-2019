@@ -5,13 +5,16 @@ import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.annotation.Dimension
 import androidx.annotation.Dimension.DP
 import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.App
 import ru.skillbranch.devintensive.R
+import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.utils.Utils.convertDpToPixel
 import ru.skillbranch.devintensive.utils.Utils.convertPixelsToDp
 import kotlin.math.min
@@ -107,6 +110,22 @@ class CircleImageView @JvmOverloads constructor(
         drawable.draw(canvas)
 
         return bitmap
+    }
+
+    fun setInitials(initials: String) {
+        val bgColor = TypedValue()
+        context.theme.resolveAttribute(R.attr.colorAccent, bgColor, true)
+
+        val bitmap = Utils.textAsBitmap(
+            layoutParams.width,
+            layoutParams.height,
+            initials,
+            Utils.convertSpToPixel(48f, context),
+            Color.WHITE,
+            bgColor.data)
+
+        setImageBitmap(bitmap)
+
     }
 
 
